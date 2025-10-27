@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do - Home</title>
+    {% load static %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px;
+        }
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 3px solid #007bff;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .tasks-btn {
+            background-color: #007bff;
+        }
+        .tasks-btn:hover {
+            background-color: #0056b3;
+        }
+        .completed-btn {
+            background-color: #28a745;
+        }
+        .completed-btn:hover {
+            background-color: #218838;
+        }
+        .due-tasks-btn {
+            background-color: #ffc107;
+        }
+        .due-tasks-btn:hover {
+            background-color: #e0a800;
+        }
+        .friends-btn {
+            background-color: #6c757d;
+        }
+        .friends-btn:hover {
+            background-color: #5a6268;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+      <div class="container">
+          <h1>Welcome to To Do</h1>
+          <img src="{% static 'images/avatar.jpg' %}" alt="User Avatar" class="avatar">
+
+          <a href="{% url 'tasks' %}" class="button tasks-btn">Tasks</a>
+          <a href="{% url 'completed_tasks' %}" class="button completed-btn">Completed Tasks</a>
+          <a href="{% url 'add_task' %}" class="button due-tasks-btn">Add Tasks</a>
+      </div>
+</body>
+</html>

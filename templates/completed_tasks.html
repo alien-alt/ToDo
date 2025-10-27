@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do - Tasks</title>
+    {% load static %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+            padding: 40px 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 25px;
+            color: #333;
+        }
+        .back-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .back-btn:hover {
+            background-color: #5a6268;
+        }
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .task-btn {
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .task-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        .priority-high {
+            background-color: #dc3545; /* Красный */
+        }
+        .priority-high:hover {
+            background-color: #c82333;
+        }
+        .priority-medium {
+            background-color: #ffc107; /* Жёлтый */
+            color: #212529;
+        }
+        .priority-medium:hover {
+            background-color: #e0a800;
+        }
+        .priority-low {
+            background-color: #28a745; /* Зелёный */
+        }
+        .priority-low:hover {
+            background-color: #218838;
+        }
+        .no-tasks {
+            color: #666;
+            font-style: italic;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Completed Tasks</h1>
+        <a href="javascript:history.back()" class="back-btn">Back</a>
+        <div class="task-list">
+    <!-- Задачи как ссылки, стилизованные под кнопки -->
+            <a href="{% url 'task_detail' %}" class="task-btn priority-high">Finish project report</a>
+            <a href="{% url 'task_detail' %}" class="task-btn priority-medium">Review pull requests</a>
+            <a href="{% url 'task_detail' %}" class="task-btn priority-low">Update documentation</a>
+            <a href="{% url 'task_detail' %}" class="task-btn priority-high">Fix login bug</a>
+            <a href="{% url 'task_detail' %}" class="task-btn priority-medium">Prepare presentation</a>
+            <a href="{% url 'task_detail' %}" class="task-btn priority-low">Clean up inbox</a>
+
+        </div>
+    </div>
+</body>
+</html>

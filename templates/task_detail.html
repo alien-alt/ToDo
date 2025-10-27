@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do - Task Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+            padding: 40px 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+            text-align: center;
+        }
+        .back-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 25px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .back-btn:hover {
+            background-color: #5a6268;
+        }
+
+        /* Поле задачи */
+        .task-title {
+            font-size: 20px;
+            font-weight: bold;
+            padding: 14px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .priority-high { background-color: #dc3545; }
+        .priority-medium { background-color: #ffc107; color: #212529; }
+        .priority-low { background-color: #28a745; }
+
+        /* Описание */
+        .description {
+            background-color: #f8f9fa;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            min-height: 80px;
+            font-size: 15px;
+            color: #444;
+            line-height: 1.5;
+            border: 1px solid #e9ecef;
+        }
+
+        /* Форма редактирования */
+        .edit-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .edit-form input,
+        .edit-form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+        .edit-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .edit-form select {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        /* Кнопки */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-save {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-save:hover {
+            background-color: #218838;
+        }
+        .btn-cancel {
+            background-color: #6c757d;
+            color: white;
+        }
+        .btn-cancel:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn" onclick="window.history.back()">Back to Tasks</button>
+
+        <h1>Task Detail</h1>
+
+        <!-- Название задачи с цветом приоритета -->
+        <div class="task-title priority-high">
+            Finish project report
+        </div>
+
+        <!-- Описание -->
+        <div class="description">
+            This is a critical task. The report must be submitted by Friday. Include all charts, analysis, and conclusions. Review with the manager before final submission.
+        </div>
+
+        <!-- Форма редактирования (можно скрыть/показать по кнопке) -->
+        <form class="edit-form">
+            <input type="text" value="Finish project report" placeholder="Task Title">
+
+            <select>
+                <option value="high" selected>High Priority (Red)</option>
+                <option value="medium">Medium Priority (Yellow)</option>
+                <option value="low">Low Priority (Green)</option>
+            </select>
+
+            <textarea placeholder="Task description...">This is a critical task. The report must be submitted by Friday. Include all charts, analysis, and conclusions. Review with the manager before final submission.</textarea>
+
+            <div class="btn-group">
+                <button type="submit" class="btn btn-save">Save Changes</button>
+                <button type="button" class="btn btn-cancel" onclick="window.history.back()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
