@@ -1,1 +1,11 @@
 db.sqlite3
+**/migrations/
+
+# Игнорировать все файлы __init__.py
+**/__init__.py
+
+# Игнорировать все папки __pycache__
+**/__pycache__/
+__pycache__/
+*.pyc
+*.pyo

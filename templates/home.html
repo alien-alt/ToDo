@@ -76,12 +76,14 @@
 </head>
 <body>
       <div class="container">
-          <h1>Welcome to To Do</h1>
-          <img src="{% static 'images/avatar.jpg' %}" alt="User Avatar" class="avatar">
-
+        <h1>Welcome {{ username }}</h1>
           <a href="{% url 'tasks' %}" class="button tasks-btn">Tasks</a>
           <a href="{% url 'completed_tasks' %}" class="button completed-btn">Completed Tasks</a>
           <a href="{% url 'add_task' %}" class="button due-tasks-btn">Add Tasks</a>
+          <form method="post" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button type="submit">Logout</button>
+          </form>
       </div>
 </body>
 </html>

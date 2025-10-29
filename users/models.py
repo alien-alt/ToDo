@@ -4,7 +4,6 @@ from .managers import CustomUserManager
 
 # Create your models here.
 class User(AbstractUser):
-    avatar = models.ImageField(upload_to='avatar/')
     objects = CustomUserManager()
 
 class Task(models.Model):
