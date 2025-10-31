@@ -139,31 +139,62 @@
         <h1>Task Detail</h1>
 
         <!-- Название задачи с цветом приоритета -->
-        <div class="task-title priority-high">
-            Finish project report
-        </div>
+        {% if task.priorety == 0 %}
+            <div class="task-title priority-low">
+                {{ task.name }}
+        {% elif task.priorety == 1 %}
+            <div class="task-title priority-medium">
+                {{ task.name }}
+        {% else %}
+            <div class="task-title priority-high">
+                {{ task.name }}
+        {% endif %}
+            </div>
 
         <!-- Описание -->
         <div class="description">
-            This is a critical task. The report must be submitted by Friday. Include all charts, analysis, and conclusions. Review with the manager before final submission.
+            {{ task.description }}
         </div>
 
         <!-- Форма редактирования (можно скрыть/показать по кнопке) -->
-        <form class="edit-form">
-            <input type="text" value="Finish project report" placeholder="Task Title">
-
-            <select>
-                <option value="high" selected>High Priority (Red)</option>
-                <option value="medium">Medium Priority (Yellow)</option>
-                <option value="low">Low Priority (Green)</option>
+<!-- Основная форма для редактирования -->
+        <form class="edit-form" method="POST" action="{% url 'edit_task'%}">
+            {% csrf_token %}
+            <input type="hidden" name="task_id" value="{{ task.id }}">
+            <input type="text" name="name" value="{{ task.name }}" placeholder="Task Title" required>
+            
+            <select name="priorety">
+                <option value="2" {% if task.priorety == 2 %}selected{% endif %}>High Priority (Red)</option>
+                <option value="1" {% if task.priorety == 1 %}selected{% endif %}>Medium Priority (Yellow)</option>
+                <option value="0" {% if task.priorety == 0 %}selected{% endif %}>Low Priority (Green)</option>
             </select>
-
-            <textarea placeholder="Task description...">This is a critical task. The report must be submitted by Friday. Include all charts, analysis, and conclusions. Review with the manager before final submission.</textarea>
-
+            
+            <textarea name="description" placeholder="Task description...">{{ task.description }}</textarea>
+            
             <div class="btn-group">
+                <!-- Save Changes - отправляет основную форму -->
                 <button type="submit" class="btn btn-save">Save Changes</button>
+                
+                <!-- Complete - отправляет на другой URL -->
+                <button type="button" class="btn btn-complete" onclick="document.getElementById('completeForm').submit()">Complete</button>
+                
+                <!-- Delete - отправляет на другой URL с подтверждением -->
+                <button type="button" class="btn btn-delete" onclick="if(confirm('Are you sure you want to delete this task?')) document.getElementById('deleteForm').submit()">Delete</button>
+                
                 <button type="button" class="btn btn-cancel" onclick="window.history.back()">Cancel</button>
             </div>
+        </form>
+        
+        <!-- Скрытая форма для Complete -->
+        <form id="completeForm" method="POST" action="{% url 'complete_task' %}" style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="task_id" value="{{ task.id }}">
+        </form>
+        
+        <!-- Скрытая форма для Delete -->
+        <form id="deleteForm" method="POST" action="{% url 'delete_task' %}" style="display: none;">
+            {% csrf_token %}
+            <input type="hidden" name="task_id" value="{{ task.id }}">
         </form>
     </div>
 </body>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do - Add Task</title>
+    <title>To Do - Task Detail</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,7 +25,7 @@
         }
         h1 {
             font-size: 24px;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
             color: #333;
             text-align: center;
         }
@@ -33,7 +33,7 @@
             display: block;
             width: 100%;
             padding: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             background-color: #6c757d;
             color: white;
             border: none;
@@ -41,22 +41,47 @@
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s;
-            text-decoration: none;
-            text-align: center;
         }
         .back-btn:hover {
             background-color: #5a6268;
         }
 
-        /* Форма */
-        .add-form {
+        /* Поле задачи */
+        .task-title {
+            font-size: 20px;
+            font-weight: bold;
+            padding: 14px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .priority-high { background-color: #dc3545; }
+        .priority-medium { background-color: #ffc107; color: #212529; }
+        .priority-low { background-color: #28a745; }
+
+        /* Описание */
+        .description {
+            background-color: #f8f9fa;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            min-height: 80px;
+            font-size: 15px;
+            color: #444;
+            line-height: 1.5;
+            border: 1px solid #e9ecef;
+        }
+
+        /* Форма редактирования */
+        .edit-form {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
-        .add-form input,
-        .add-form textarea,
-        .add-form select {
+        .edit-form input,
+        .edit-form textarea {
             width: 100%;
             padding: 12px;
             border: 1px solid #ccc;
@@ -64,20 +89,16 @@
             font-size: 15px;
             box-sizing: border-box;
         }
-        .add-form textarea {
+        .edit-form textarea {
             min-height: 100px;
             resize: vertical;
         }
-
-        /* Приоритет — цветная подсказка */
-        .priority-label {
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
+        .edit-form select {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
         }
-        .priority-high { color: #dc3545; }
-        .priority-medium { color: #ffc107; }
-        .priority-low { color: #28a745; }
 
         /* Кнопки */
         .btn-group {
@@ -113,35 +134,27 @@
 </head>
 <body>
     <div class="container">
-        <!-- Кнопка "Назад" как ссылка -->
-        <a href="#" class="back-btn" onclick="history.back(); return false;">Back to Tasks</a>
+        <button class="back-btn" onclick="window.history.back()">Back to Tasks</button>
 
-        <h1>Add New Task</h1>
+        <h1>Task Detail</h1>
 
-      <form class="add-form" method="POST" action="{% url 'create_task' %}">
-        {% csrf_token %}
-    
-    <!-- Название -->
-        <input type="text" name="title" placeholder="Task title..." required>
-    
-    <!-- Приоритет -->
-        <div>
-          <label class="priority-label priority-high">Priority</label>
-            <select name="priorety">
-                <option value="high">High (Red)</option>
-                <option value="medium" selected>Medium (Yellow)</option>
-                <option value="low">Low (Green)</option>
-            </select>
-        </div>
-    
+        <!-- Название задачи с цветом приоритета -->
+        {% if completed_task.priorety == 0 %}
+            <div class="task-title priority-low">
+                {{ completed_task.name }}
+        {% elif completed_task.priorety == 1 %}
+            <div class="task-title priority-medium">
+                {{ completed_task.name }}
+        {% else %}
+            <div class="task-title priority-high">
+                {{ completed_task.name }}
+        {% endif %}
+            </div>
+
         <!-- Описание -->
-        <textarea name="description" placeholder="Task description (optional)..."></textarea>
-            <!-- Кнопки -->
-          <div class="btn-group">
-              <button type="submit" class="btn btn-save">Create Task</button>
-              <a href="{% url 'home' %}" class="btn btn-cancel">Cancel</a>
-          </div>
-      </form>
-    </div>
+        <div class="description">
+            {{ completed_task.description }}
+        </div>
+   </div>
 </body>
 </html>

@@ -99,14 +99,15 @@
         <h1>Your Tasks</h1>
         <a href="javascript:history.back()" class="back-btn">Back</a>
         <div class="task-list">
-    <!-- Задачи как ссылки, стилизованные под кнопки -->
-            <a href="{% url 'task_detail' %}" class="task-btn priority-high">Finish project report</a>
-            <a href="{% url 'task_detail' %}" class="task-btn priority-medium">Review pull requests</a>
-            <a href="{% url 'task_detail' %}" class="task-btn priority-low">Update documentation</a>
-            <a href="{% url 'task_detail' %}" class="task-btn priority-high">Fix login bug</a>
-            <a href="{% url 'task_detail' %}" class="task-btn priority-medium">Prepare presentation</a>
-            <a href="{% url 'task_detail' %}" class="task-btn priority-low">Clean up inbox</a>
-
+        {% for task in task_list%}
+          {% if task.priorety == 2 %}
+            <a href="{% url 'task_detail' task.id %}" class="task-btn priority-high">{{ task.name}}</a>
+          {% elif task.priorety == 1 %}
+          <a href="{% url 'task_detail' task.id %}" class="task-btn priority-medium">{{task.name}}</a>
+          {% else %}
+          <a href="{% url 'task_detail' task.id %}" class="task-btn priority-low">{{task.name}}</a>
+          {% endif %}
+        {% endfor %}
         </div>
     </div>
 </body>
