@@ -37,13 +37,14 @@ urlpatterns = [
     path('task-detail/<int:id>/', DetailTasksView.as_view(), name='task_detail'),
     path('completed-tasks', CompletedTasksView.as_view(), name='completed_tasks'),
     path('detail-completed-task/<int:id>', DetailCompletedTasksView.as_view(), name='detail_completed_task'),
+    path('add-task', AddTaskView.as_view(), name='add_task'),
+    # POST views
     path('make-register', MakeRegisterView.as_view(), name='make_register'),
     path('make-login', MakeLoginView.as_view(), name='make_login'),
     path('create_task', CreateTaskView.as_view(), name='create_task'),
     path('logout', LogoutView.as_view(), name='logout'),
     path('edit_task', EditTaskView.as_view(), name='edit_task'),
     path('complete-task', CompleteTask.as_view(), name='complete_task'),
-    path('add-task', AddTaskView.as_view(), name='add_task'),
     path('delete-task', DeleteTaskView.as_view(), name='delete_task'),
 ]
 

@@ -8,6 +8,7 @@ from django.contrib.auth.hashers import check_password
 class HomeView(TemplateView):
     template_name = 'home.html'
 
+    # Провереям авторизован ли пользователь
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return super().dispatch(request, *args, **kwargs)
@@ -20,15 +21,22 @@ class HomeView(TemplateView):
 
         return context
 
+
+
 class RegisterView(TemplateView):
     template_name = 'register.html'
+
+
 
 class LoginView(TemplateView):
     template_name = 'login.html'
 
+
+
 class TasksView(TemplateView):
     template_name = 'tasks.html'
 
+    # Провереям авторизован ли пользователь
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return super().dispatch(request, *args, **kwargs)
@@ -43,9 +51,12 @@ class TasksView(TemplateView):
 
         return context
 
+
+
 class DetailTasksView(TemplateView):
     template_name = 'task_detail.html'
 
+    # Провереям авторизован ли пользователь
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return super().dispatch(request, *args, **kwargs)
@@ -64,9 +75,12 @@ class DetailTasksView(TemplateView):
         context = {'task': task}
         return context
 
+
+
 class CompletedTasksView(TemplateView):
     template_name = 'completed_tasks.html'
 
+    # Провереям авторизован ли пользователь
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return super().dispatch(request, *args, **kwargs)
@@ -82,9 +96,11 @@ class CompletedTasksView(TemplateView):
         return context
 
 
+
 class DetailCompletedTasksView(TemplateView):
     template_name = 'completed_task_detail.html'
 
+    # Провереям авторизован ли пользователь
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return super().dispatch(request, *args, **kwargs)
@@ -101,15 +117,22 @@ class DetailCompletedTasksView(TemplateView):
             context = {'completed_task': completed_task}
             return context
 
+
+
+class AddTaskView(TemplateView):
+    template_name = 'add_task.html'
+
+
+
 """POST views"""
 class MakeRegisterView(View):
     def post(self, request, *args, **kwargs):
         data = request.POST
 
-        username = data['username']
-        password = data['password']
+        username = data.get('username')
+        password = data.get('password')
 
-        is_fields_not_empty =  username != "" and password != ""
+        is_fields_not_empty =  username and password
         is_username_unique = not(User.objects.filter(username=username).exists())
 
 
@@ -128,14 +151,16 @@ class MakeRegisterView(View):
             context = {'error': f"Имя {username} уже занято"}
             return render(request, 'register.html', context)
 
+
+
 class MakeLoginView(View):
     def post(self, request, *args, **kwargs):
         data = request.POST
 
-        username = data['username']
-        password = data['password']
+        username = data.get('username')
+        password = data.get('password')
 
-        is_fields_not_empty =  username != "" and password != ""
+        is_fields_not_empty =  username and password
 
         if is_fields_not_empty:
 
@@ -152,10 +177,13 @@ class MakeLoginView(View):
         return redirect('login')
 
 
+
 class LogoutView(View):
     def post(self, request, *args, **kwargs):
         logout(request)
         return redirect('register')
+
+
 
 class CreateTaskView(View):
     def post(self, request, *args, **kwargs):
@@ -187,16 +215,21 @@ class CreateTaskView(View):
 
         return redirect('tasks')
 
-class AddTaskView(TemplateView):
-    template_name = 'add_task.html'
+
 
 class EditTaskView(View):
     def post(self, request, *args, **kwargs):
+        if not(request.user.is_authenticated):
+            return redirect('register')
+
         data = request.POST
         new_name = data.get('name')
         new_description = data.get('description')
         new_priorety = data.get('priorety')
         task_id = data.get('task_id')
+
+        if not(request.user.tasks.filter(id=task_id).exists()):
+            return redirect('home')
 
         task = request.user.tasks.get(id=task_id)
 
@@ -207,8 +240,13 @@ class EditTaskView(View):
 
         return redirect('tasks')
 
+
+
 class CompleteTask(View):
     def post(self, request, *args, **kwargs):
+        if not(request.user.is_authenticated):
+            return redirect('register')
+
         task_id = request.POST.get('task_id')
         task_is_exists = request.user.tasks.filter(id=task_id).exists()
 
@@ -228,9 +266,19 @@ class CompleteTask(View):
 
         return redirect('tasks')
 
+
+
 class DeleteTaskView(View):
     def post(self, request, *args, **kwargs):
         task_id = request.POST.get('task_id')
+
+        if not(request.user.is_authenticated):
+            return redirect('register')
+
+        if not(request.user.tasks.filter(id=task_id).exists()):
+            return redirect('home')
+
         task = request.user.tasks.get(id=task_id)
         task.delete()
         return redirect('tasks')
+

@@ -1,11 +1,60 @@
-db.sqlite3
-**/migrations/
-
-# Игнорировать все файлы __init__.py
-**/__init__.py
-
-# Игнорировать все папки __pycache__
-**/__pycache__/
+# === Python ===
 __pycache__/
+*.py[cod]
+*$py.class
+
+# === Django ===
+*.log
+local_settings.py
+db.sqlite3
+media/
+staticfiles/
+static/
+.env
+.env.*
+
+# === Virtual environment ===
+venv/
+env/
+.venv/
+.envrc
+.venv.bak/
+
+# === IDEs and editors ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*.bak
+*.orig
+
+# === OS-specific ===
+.DS_Store
+Thumbs.db
+
+# === Coverage / testing ===
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+htmlcov/
+
+# === Migrations cache (не обязательно, если вы не хотите хранить миграции) ===
+# users/migrations/
+# todo_core/migrations/
+
+# === PyInstaller ===
+build/
+dist/
+*.spec
+
+# === MyPy / Ruff / Pyright / etc ===
+.mypy_cache/
+.pytest_cache/
+ruff_cache/
+.pyright/
+
+# === Other ===
+*.pot
 *.pyc
-*.pyo
+
